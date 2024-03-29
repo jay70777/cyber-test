@@ -1,0 +1,24 @@
+import java.sql.*;
+
+public class SimpleDatabaseExample {
+
+    public static void main(String[] args) {
+        try {
+            // Connect to the SQLite database
+            Connection connection = DriverManager.getConnection("jdbc:sqlite:test.db");
+
+            // Create a new table
+            Statement statement = connection.createStatement();
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, age INTEGER)");
+
+            // Insert some data into the table
+            statement.executeUpdate("INSERT INTO users (name, age) VALUES ('Alice', 30)");
+            statement.executeUpdate("INSERT INTO users (name, age) VALUES ('Bob', 25)");
+
+            // Retrieve data from the table
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM users");
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                int age = resultSet.getInt("age");
+                System.out.println("
